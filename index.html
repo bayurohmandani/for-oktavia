@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spesial Buat Oktavia ✨</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        body {
+            background-color: #ffc5d3;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            padding: 20px;
+        }
+
+        .arabic-text {
+            font-family: 'Amiri', 'Traditional Arabic', 'Arial', sans-serif;
+            font-size: 26px;
+            margin-bottom: 8px;
+            font-weight: normal;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.6); 
+        }
+
+        .bg-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Ganti dengan nama file fotomu jika berbeda */
+            background-image: url('oktavia.png'); 
+            background-size: cover;
+            background-position: center top; /* Fokus ke bagian atas/wajah */
+            opacity: 0.6; /* Tingkat transparansi (0.0 sampai 1.0) */
+            filter: blur(3px) brightness(0.9); /* Efek blur dan sedikit gelap agar teks terbaca */
+            z-index: 1;
+            transition: all 2s ease;
+        }
+
+
+        #introScreen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #fff5f7 0%, #ffc5d3 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        .intro-text {
+            color: #ff5c7c;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Animasi Salju & Pernak-pernik Berjatuhan */
+        .snowflake {
+            position: fixed;
+            top: -10vh;
+            color: rgba(255, 255, 255, 0.95);
+            pointer-events: none;
+            z-index: 5;
+            animation: fall linear forwards;
+            text-shadow: 0 0 5px rgba(255, 107, 139, 0.5);
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(360deg);
+            }
+        }
+
+        /* Teks Tunggu Sebentar (Muncul 10 detik awal) */
+        #waitingText {
+            position: fixed;
+            z-index: 8;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            text-shadow: 1px 1px 10px rgba(0,0,0,0.5);
+            opacity: 0;
+            transition: opacity 1s ease;
+            text-align: center;
+        }
+
+        /* Wadah Utama (Kartu) - Awalnya Tersembunyi */
+        .card-container {
+            background: rgba(255, 255, 255, 0.82);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 30px 20px;
+            width: 100%;
+            max-width: 450px;
+            height: auto; 
+            box-shadow: 0 10px 30px rgba(255, 107, 139, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 10;
+            
+            /* Sembunyikan di awal */
+            opacity: 0;
+            transform: translateY(50px) scale(0.9);
+            visibility: hidden;
+            transition: all 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Class untuk memunculkan kartu */
+        .card-container.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            visibility: visible;
+        }
+
+        /* Navigasi Slide */
+        .slides-wrapper {
+            position: relative;
+            width: 100%;
+            display: grid;
+        }
+
+        .slide {
+            grid-area: 1 / 1;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.5s ease-in-out;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+
+        /* Tipografi & Elemen Visual */
+        h1 { color: #ff5c7c; font-size: 24px; margin-bottom: 15px; line-height: 1.3; }
+        p { color: #555; font-size: 15px; line-height: 1.6; margin-bottom: 20px; }
+        .cute-img { font-size: 60px; margin-bottom: 20px; animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        /* Styling CV PDKT */
+        .cv-title { font-size: 20px; color: #ff5c7c; margin-bottom: 15px; font-weight: 700; }
+        .cv-list { text-align: left; width: 100%; background: rgba(255, 255, 255, 0.6); padding: 15px; border-radius: 15px; box-shadow: inset 0 0 10px rgba(0,0,0,0.02); }
+        .cv-item { margin-bottom: 10px; font-size: 14px; color: #444; display: flex; align-items: flex-start; }
+        .cv-item strong { color: #ff5c7c; min-width: 85px; display: inline-block; }
+
+        /* Tombol */
+        .nav-buttons { display: flex; justify-content: space-between; align-items: center; margin-top: 25px; width: 100%; gap: 5px; }
+        .btn { background: #ff7893; color: white; border: none; padding: 12px 25px; border-radius: 50px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(255, 120, 147, 0.3); font-size: 15px; white-space: nowrap; }
+        .btn:hover { background: #ff5c7c; transform: translateY(-2px); }
+        .btn-disabled { background: #e8e8e8; box-shadow: none; cursor: not-allowed; color: #bbb; }
+        .btn-disabled:hover { background: #e8e8e8; transform: none; }
+        .btn-photo { margin-top: 15px; background: #ffa8b9; width: 100%; padding: 12px; font-size: 15px; }
+        .btn-photo:hover { background: #ff5c7c; }
+        .btn-wa { background: #25d366; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 25px; font-size: 16px; border-radius: 50px; color: white; font-weight: bold; margin-top: 10px; }
+        .btn-wa:hover { background: #20ba5a; transform: translateY(-2px); }
+
+        /* Indikator Slide */
+        .dots-container { display: flex; gap: 8px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; background: #e5e5e5; transition: all 0.3s ease; }
+        .dot.active { background: #ff5c7c; transform: scale(1.2); }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="letto.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="introScreen">
+        <div class="intro-text">Ada sesuatu buat kamu...</div>
+        <button class="btn" onclick="mulaiPengalaman()">Buka Pesan ✨</button>
+    </div>
+
+    <div class="bg-image"></div>
+
+    <div id="waitingText">
+        <div class="arabic-text">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+        Dengerin lagunya sebentar ya... 🎧💖<br>
+        Masih deg-degan, hehe...
+    </div>
+    <div class="card-container" id="mainCard">
+        <div class="slides-wrapper">
+            
+            <div class="slide active" id="slide-0">
+                <div class="cute-img">✨👋</div>
+                <h1>Halo, Oktavia!</h1>
+                <p>Semoga hari kamu menyenangkan ya. Jujur, meskipun kita belum pernah ketemu langsung, entah kenapa aku merasa pengen banget kenal sama kamu. Makanya, aku beranikan diri bikin halaman kecil ini. Boleh kan kita kenalan? 😊</p>
+            </div>
+
+            <div class="slide" id="slide-1">
+                <div class="cv-title">Data Diri 😉</div>
+                <div class="cv-list">
+                    <div class="cv-item"><strong>Nama:</strong> <span><b> Bayu Rohmandani</b></span></div>
+                    <div class="cv-item"><strong>TTL:</strong> <span> Wonogiri, 1 Januari 2000 (usia sekitar 20 tahun)</span></div>
+                    <div class="cv-item"><strong>Hobi:</strong> <span> Dengerin musik, nyanyi (meski suara jelek ✌️), & belajar hal baru</span></div>
+                    <div class="cv-item"><strong>Kelebihan:</strong> <span> Pendengar yang baik, fast response kalau gak sibuk, & lumayan kreatif</span></div>
+                    <div class="cv-item"><strong>Kekurangan:</strong> <span> Slow response kalau lagi sibuk, pemalu kalau harus ngajak kenalan duluan secara langsung 😅</span></div>
+                </div>
+                <button class="btn btn-photo" onclick="alert('Maaf belum punya foto, kapan-kapan kita buat ya... 😉📸')">Lihat Foto Saya 📷</button>
+            </div>
+
+            <div class="slide" id="slide-2">
+                <div class="cute-img">🌸💖</div>
+                <h1>Gimana, Oktavia?</h1>
+                <p>Aku berharap banget kita bisa jadi teman ngobrol yang asik. Kalau kamu gak keberatan nambah teman baru yang mau ngasih kehangatan di hari-harimu, sapa aku di WhatsApp ya! Tinggal klik tombol di bawah 👇</p>
+                <a href="https://wa.me/6285156572769?text=Hai%20Bayu!%20Salam%20kenal%20juga%20ya%20dari%20Oktavia%20😊" target="_blank" class="btn-wa">
+                    Sapa via WA 💬
+                </a>
+            </div>
+
+        </div>
+
+        <div class="nav-buttons">
+            <button class="btn btn-disabled" id="prevBtn" onclick="changeSlide(-1)">Sebelumnya</button>
+            <div class="dots-container">
+                <div class="dot active"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+            <button class="btn" id="nextBtn" onclick="changeSlide(1)">Selanjutnya</button>
+        </div>
+    </div>
+
+    <script>
+        // --- LOGIKA 10 DETIK & MUSIK ---
+        function mulaiPengalaman() {
+            // 1. Sembunyikan layar awal
+            const intro = document.getElementById('introScreen');
+            intro.style.opacity = '0';
+            intro.style.visibility = 'hidden';
+
+            // 2. Mainkan lagu romantis
+            const lagu = document.getElementById('bgMusic');
+            lagu.play();
+
+            // 3. Munculkan teks "Dengerin lagunya..."
+            const teksTunggu = document.getElementById('waitingText');
+            setTimeout(() => {
+                teksTunggu.style.opacity = '1';
+            }, 500); // Muncul setelah 0.5 detik
+
+            // Sembunyikan teks tunggu di detik ke-9
+            setTimeout(() => {
+                teksTunggu.style.opacity = '0';
+            }, 9000);
+
+            // 4. Munculkan kartu utama setelah 10 DETIK (10000 milidetik)
+            setTimeout(() => {
+                const kartu = document.getElementById('mainCard');
+                kartu.classList.add('show');
+            }, 10000);
+        }
+
+        // --- LOGIKA SLIDE KARTU ---
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        function changeSlide(direction) {
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+
+            currentSlide += direction;
+
+            if (currentSlide === 0) {
+                prevBtn.classList.add('btn-disabled');
+                prevBtn.disabled = true;
+            } else {
+                prevBtn.classList.remove('btn-disabled');
+                prevBtn.disabled = false;
+            }
+
+            if (currentSlide === slides.length - 1) {
+                nextBtn.classList.add('btn-disabled');
+                nextBtn.disabled = true;
+            } else {
+                nextBtn.classList.remove('btn-disabled');
+                nextBtn.disabled = false;
+            }
+
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+        
+        prevBtn.disabled = true;
+
+        // --- LOGIKA EFEK SALJU BERJATUHAN ---
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            
+            const icons = ['❄', '✨', '💖', '🌸', '🤍'];
+            snowflake.innerText = icons[Math.floor(Math.random() * icons.length)];
+            
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.animationDuration = Math.random() * 3 + 4 + 's'; 
+            snowflake.style.opacity = Math.random() * 0.7 + 0.3;
+            snowflake.style.fontSize = Math.random() * 15 + 10 + 'px';
+            
+            document.body.appendChild(snowflake);
+            
+            setTimeout(() => {
+                snowflake.remove();
+            }, 7000);
+        }
+        setInterval(createSnowflake, 300);
+    </script>
+</body>
+</html>
